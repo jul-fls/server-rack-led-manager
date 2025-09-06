@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WLED Rack Controller</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Make SVG element-level drop-shadows work consistently */
+    svg { filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+    /* Hide number spinners (Chrome/Firefox) */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <div class="max-w-7xl mx-auto p-4 space-y-6">
+    <!-- Header -->
+    <header class="flex items-center justify-between">
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">WLED Server Rack</h1>
+      <div class="flex items-center gap-2">
+        <button id="refreshBtn" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-sm">Refresh</button>
+        <span id="statusBadge" class="text-xs text-slate-400">loading…</span>
+      </div>
+    </header>
+
+    <!-- Top Controls -->
+    <section class="grid md:grid-cols-3 gap-4">
+      <div class="bg-slate-900 rounded-2xl p-4 shadow">
+        <h2 class="font-medium mb-3">Global</h2>
+        <div class="flex flex-wrap gap-2">
+          <button id="btnReset" class="px-3 py-2 rounded-xl bg-white text-slate-900 hover:opacity-90 text-sm">Reset (White)</button>
+          <button id="btnClear" class="px-3 py-2 rounded-xl bg-black border border-slate-600 hover:bg-slate-900 text-sm">Clear (Black)</button>
+          <button id="btnScan" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-sm">Scan U 42→1</button>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Scan blinks each U 3× random color to check alignment.</p>
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl p-4 shadow">
+        <h2 class="font-medium mb-3">Quick U</h2>
+        <form id="uForm" class="grid grid-cols-2 gap-2 items-end">
+          <label class="col-span-1">
+            <span class="text-xs text-slate-400">U Number</span>
+            <input id="uNumber" type="number" min="1" step="1" class="w-full mt-1 px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 focus:outline-none" placeholder="e.g. 20">
+          </label>
+          <label class="col-span-1">
+            <span class="text-xs text-slate-400">Color</span>
+            <input id="uColor" type="color" class="w-full mt-1 h-[42px] rounded-xl bg-slate-800 border border-slate-700" value="#00FFAA">
+          </label>
+          <button id="uSet" type="button" class="col-span-1 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-sm">Light U</button>
+          <button id="uBlink" type="button" class="col-span-1 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-sm">Blink U</button>
+        </form>
+        <p class="text-xs text-slate-400 mt-2">Uses both sides unless equipment restricts to one side.</p>
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl p-4 shadow">
+        <h2 class="font-medium mb-3">Side Test</h2>
+        <div class="flex flex-wrap gap-2">
+          <button data-side="left" class="sideTest px-3 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 text-sm">Test Left</button>
+          <button data-side="right" class="sideTest px-3 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 text-sm">Test Right</button>
+          <button data-side="top" class="sideTest px-3 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 text-sm">Test Top</button>
+          <button data-side="bottom" class="sideTest px-3 py-2 rounded-xl bg-sky-700 hover:bg-sky-600 text-sm">Test Bottom</button>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Blue=start, Red=end, Green=middle. Checks direction per side.</p>
+      </div>
+    </section>
+
+    <!-- Rack Visual + Equipment -->
+    <section class="grid lg:grid-cols-3 gap-6">
+      <!-- Rack Visual -->
+      <div class="lg:col-span-2 bg-slate-900 rounded-2xl p-4 shadow">
+        <h2 class="font-medium mb-4">Rack</h2>
+        <div id="rackCanvas" class="relative w-full mx-auto border border-slate-800 rounded-2xl p-3"></div>
+        <div class="mt-3 text-xs text-slate-400" id="rackHint"></div>
+      </div>
+
+      <!-- Equipment List -->
+      <div class="bg-slate-900 rounded-2xl p-4 shadow">
+        <h2 class="font-medium mb-4">Equipments</h2>
+        <div id="equipList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- Console -->
+    <section class="bg-slate-900 rounded-2xl p-4 shadow">
+      <h2 class="font-medium mb-3">Log</h2>
+      <pre id="log" class="bg-slate-950 rounded-xl p-3 text-xs overflow-auto max-h-64"></pre>
+    </section>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

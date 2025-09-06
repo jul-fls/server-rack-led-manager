@@ -5,29 +5,89 @@
     "right":  { "length": 113, "start": 145, "reverse": true, "calibration": { "offset": -1 } },
     "bottom": { "length": 30, "start": 262, "reverse": true, "calibration": { "offset": 0 } },
 
-    "vertical_height": 113,
+    "rack_units_count": 42,
     "rack_unit_size": 3
   },
-  "rack_units": [
-    {
-      "id": "unit1"
-    },
-    {
-      "id": "unit2"
-    }
-  ],
   "equipments": [
     {
       "id": "equip1",
-      "name": "Switch",
-      "type": "network",
-      "rack_units": ["unit1", "unit2"]
+      "name": "Tiroir",
+      "type": "misc",
+      "rack_units": [2,3,4]
     },
     {
       "id": "equip2",
-      "name": "Router",
-      "type": "network",
-      "rack_units": ["unit3", "unit4"]
+      "name": "PVE1",
+      "type": "server",
+      "rack_units": [5,6,7,8,9,10]
+    },
+    {
+      "id": "equip3",
+      "name": "PVE2",
+      "type": "server",
+      "rack_units": [11,12,13,14,15,16,17,18]
+    },
+    {
+      "id": "equip4",
+      "name": "PVE3",
+      "type": "server",
+      "rack_units": [19,20,21,22,23,24]
+    },
+    {
+      "id": "equip5",
+      "name": "laptop",
+      "type": "computer",
+      "rack_units": [32,33]
+    },
+    {
+      "id": "equip6",
+      "name": "PfSense",
+      "type": "router",
+      "side": "left",
+      "rack_units": [35,36]
+    },
+    {
+      "id": "equip7",
+      "name": "JetKVM and HDMI Kvm",
+      "type": "kvm",
+      "side": "right",
+      "rack_units": [35,36]
+    },
+    {
+      "id": "equip8",
+      "name": "PP2",
+      "type": "patch",
+      "rack_units": [37]
+    },
+    {
+      "id": "equip9",
+      "name": "Switch3",
+      "type": "nettwork",
+      "rack_units": [38]
+    },
+    {
+      "id": "equip10",
+      "name": "Switch1",
+      "type": "nettwork",
+      "rack_units": [39]
+    },
+    {
+      "id": "equip11",
+      "name": "PP1",
+      "type": "patch",
+      "rack_units": [40]
+    },
+    {
+      "id": "equip12",
+      "name": "Raspberry Pis",
+      "type": "server",
+      "rack_units": [41]
+    },
+    {
+      "id": "equip13",
+      "name": "HDMI Matrix",
+      "type": "video",
+      "rack_units": [42]
     }
   ]
 }
