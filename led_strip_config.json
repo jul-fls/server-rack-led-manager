@@ -1,0 +1,33 @@
+{
+  "common": {
+    "left":   { "length": 113, "start": 0, "reverse": false, "calibration": { "offset": 0 } },
+    "top":    { "length": 31, "start": 114, "reverse": false, "calibration": { "offset": 0 } },
+    "right":  { "length": 113, "start": 145, "reverse": true, "calibration": { "offset": -1 } },
+    "bottom": { "length": 30, "start": 262, "reverse": true, "calibration": { "offset": 0 } },
+
+    "vertical_height": 113,
+    "rack_unit_size": 3
+  },
+  "rack_units": [
+    {
+      "id": "unit1"
+    },
+    {
+      "id": "unit2"
+    }
+  ],
+  "equipments": [
+    {
+      "id": "equip1",
+      "name": "Switch",
+      "type": "network",
+      "rack_units": ["unit1", "unit2"]
+    },
+    {
+      "id": "equip2",
+      "name": "Router",
+      "type": "network",
+      "rack_units": ["unit3", "unit4"]
+    }
+  ]
+}
