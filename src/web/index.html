@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WLED Rack Controller</title>
+  <title>Server Rack Led Manager</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Make SVG element-level drop-shadows work consistently */
@@ -12,6 +12,8 @@
     input[type=number]::-webkit-outer-spin-button,
     input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     input[type=number] { -moz-appearance: textfield; }
+    /* Crisp canvas rendering */
+    canvas { image-rendering: pixelated; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
@@ -79,6 +81,17 @@
       <div class="bg-slate-900 rounded-2xl p-4 shadow">
         <h2 class="font-medium mb-4">Equipments</h2>
         <div id="equipList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- LIVE LED MONITOR -->
+    <section class="bg-slate-900 rounded-2xl p-4 shadow">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="font-medium">Live LED Monitor</h2>
+        <span class="text-xs text-slate-400">Shows current LED colors per side in real time.</span>
+      </div>
+      <div id="monitor" class="space-y-3">
+        <!-- rows injected -->
       </div>
     </section>
 

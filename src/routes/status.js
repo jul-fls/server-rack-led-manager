@@ -8,12 +8,19 @@ const { normalizeSides } = require('../utils');
 
 router.get('/status', (req, res) => {
   res.json({
+    wled_ip: config.common.wled.ip,
     config: ledConfig,
     reverse: {
       left: config.common.left.reverse,
       top: config.common.top.reverse,
       right: config.common.right.reverse,
       bottom: config.common.bottom.reverse
+    },
+    sideStart: {
+      left:   config.common.left.start,
+      top:    config.common.top.start,
+      right:  config.common.right.start,
+      bottom: config.common.bottom.start
     },
     calibrationOffset: {
       left: getSideOffsetCalib('left'),

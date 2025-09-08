@@ -6,7 +6,10 @@
     "bottom": { "length": 30, "start": 262, "reverse": true, "calibration": { "offset": 0 } },
 
     "rack_units_count": 42,
-    "rack_unit_size": 3
+    "rack_unit_size": 3,
+    "wled": {
+      "ip": "192.168.30.19"
+    }
   },
   "equipments": [
     {
