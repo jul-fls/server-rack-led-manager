@@ -560,8 +560,12 @@ function drawSideFromLive(side) {
 // ---------- Live WS connect ----------
 function startWledLive() {
   // Prefer backend-provided IP if available (STATUS.wled_ip), else the fixed one
-  const ip = (STATUS && STATUS.wled_ip) ? STATUS.wled_ip : '192.168.30.19';
-  const URL = `ws://${ip}/ws`;
+  const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+
+  // Reuse current host/port, append your endpoint
+  const wsHost = window.location.host; // includes hostname + port if any
+
+  const URL = `${wsProtocol}//${wsHost}/api/wled-ws`;
 
   try {
     if (WLED_WS && (WLED_WS.readyState === WebSocket.OPEN || WLED_WS.readyState === WebSocket.CONNECTING)) {

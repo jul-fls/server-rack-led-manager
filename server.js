@@ -8,6 +8,7 @@ const ledRoutes = require('./src/routes/led');
 const rackUnitURoutes = require('./src/routes/rackUnitU');
 const equipmentRoutes = require('./src/routes/equipment');
 const maintenanceRoutes = require('./src/routes/maintenance');
+const { setupWledWsProxy } = require('./src/routes/ws');
 const testRoutes = require('./src/routes/test');
 
 const app = express();
@@ -24,8 +25,10 @@ app.use('/api', maintenanceRoutes);
 app.use('/api', testRoutes);
 app.use('/web', express.static('src/web'));
 
-
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`LED control server is running on http://localhost:${port}`);
 });
+
+setupWledWsProxy(server);
+
 console.log(`Server is running on port ${port}`);
