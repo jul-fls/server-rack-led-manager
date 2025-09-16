@@ -6,8 +6,9 @@ const api = {
   scan: (opts = {}) => postJSON('/api/test/scan-u', opts),
   sideTest: (side) => postJSON('/api/test/side/' + side, {}),
   setU: (unum, color) => postJSON('/api/rack-unit-u/' + unum, { color }),
-  blinkU: (unum, color, times = 3, interval = 250) =>
-    postJSON('/api/rack-unit-u/' + unum + '/blink', { color, times, interval }),
+  blinkU: (unum, color, times = 3, interval = 250) => postJSON('/api/rack-unit-u/' + unum + '/blink', { color, times, interval }),
+  setURange: (range, color) => postJSON('/api/rack-unit-u/range/' + range, { color }),
+  blinkURange: (range, color, times = 3, interval = 250) => postJSON('/api/rack-unit-u/range/' + range + '/blink', { color, times, interval }),
   equipSet: (id, color) => postJSON('/api/equipment/' + id, { color }),
   equipBlink: (id, color, times = 3, interval = 250) =>
     postJSON('/api/equipment/' + id + '/blink', { color, times, interval }),
@@ -66,17 +67,36 @@ document.querySelectorAll('.sideTest').forEach(btn => {
   });
 });
 document.getElementById('uSet').addEventListener('click', async () => {
-  const u = parseInt(document.getElementById('uNumber').value, 10);
+  const uValue = document.getElementById('uNumber').value.trim();
   const color = document.getElementById('uColor').value || '#00FFAA';
-  if (!Number.isInteger(u)) return alert('Enter a U number');
+  const rangeMatch = uValue.match(/^(\d+)-(\d+)$/);
+  if (rangeMatch) {
+    // use new API method
+    const res = await api.setURange(rangeMatch[0], color);
+    logLine('→', res.message || JSON.stringify(res));
+    refresh();
+    return;
+  }
+  const u = parseInt(uValue, 10);
+  // if (!Number.isInteger(u)) return alert('Enter a U number');
   logLine('U set', u, color);
   const res = await api.setU(u, color); logLine('→', res.message || JSON.stringify(res));
   refresh();
 });
 document.getElementById('uBlink').addEventListener('click', async () => {
-  const u = parseInt(document.getElementById('uNumber').value, 10);
+  const uValue = document.getElementById('uNumber').value.trim();
   const color = document.getElementById('uColor').value || '#FFBF00';
-  if (!Number.isInteger(u)) return alert('Enter a U number');
+  const rangeMatch = uValue.match(/^(\d+)-(\d+)$/);
+  console.log('uBlink', { uValue, rangeMatch });
+  if (rangeMatch) {
+    // use new API method
+    const res = await api.blinkURange(rangeMatch[0], color, 3, 250);
+    logLine('→', res.message || JSON.stringify(res));
+    refresh();
+    return;
+  }
+  const u = parseInt(uValue, 10);
+  // if (!Number.isInteger(u)) return alert('Enter a U number');
   logLine('U blink', u, color);
   const res = await api.blinkU(u, color, 3, 250); logLine('→', res.message || JSON.stringify(res));
 });
